@@ -23,4 +23,3 @@ s4.set_size(0.22)
 
 message1 = codesters.Text("Brian Sanford",0,220,"Green")
 message2 = codesters.Text("my cat only lives for food",0,-220,"Green")
-
