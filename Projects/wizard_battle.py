@@ -26,54 +26,109 @@ window.tracer(0)
 
 # Section 2: Setup
 # TODO - create your player character
+x1 = 0
+y1 = -200
+x2 = 0
+y2 = 100
+x3 = 0
+y3 = -200
+x4 = 0
+y4 = 100
 # TODO - set your background
 set_background("castle")
-s1 = create_sprite("wizard2",0,-200)
-s2 = create_sprite("witch2",0,100)
-s3 = ("ball-lightning3",100,0)
+s1 = create_sprite("wizard2",x1,y1)
+s2 = create_sprite("witch2",x2,y2)
+s3 = create_sprite("ball-lightning3",x3,y3)
 # TODO - set the starting value for your variable
+wizard_charge = 3
+witch_charge = 3
+wizard_lives = 3
+witch_lives = 3
+x1 = 0
+y1 = -200
+x2 = 0
+y2 = 100
+x3 = 0
+y3 = -200
+x4 = 0
+y4 = 100
+
 
 # Section 3: Controls
 # TODO - define your controls
 def move_up():
+	global y1,  y3
 	s1.setheading(90)
-	s3.setheading(90)
 	s1.forward(10)
+	s3.setheading(90)
+	s3.hideturtle()
+	y1 +=10
+	y3 +=10
+	
+	
 
 def move_up2():
 	s2.setheading(90)
 	s2.forward(10)
    	 
 def move_down():
+	global y1,  y3
 	s1.setheading(270)
-	s3.setheading(270)
 	s1.forward(10)
+	s3.setheading(270)
+	s3.hideturtle()
+	y1 -=10
+	y3 -=10
+	
 
 def move_down2():
 	s2.setheading(270)
 	s2.forward(10)
     
 def move_left():
+	global x1,  x3
 	s1.setheading(180)
-	s3.setheading(180)
 	s1.forward(10)
+	s3.setheading(180)
+	s3.hideturtle()
+	x1 -=10
+	x3 -=10
+	
 	
 def move_left2():
 	s2.setheading(180)
 	s2.forward(10)
     
 def move_right():    
+	global x1,  x3
 	s1.setheading(0)
-	s3.setheading(0)
 	s1.forward(10)
+	s3.setheading(0)
+	s3.hideturtle()
+	x1 +=10
+	x3 +=10
+	
 	
 def move_right2():    
 	s2.setheading(0)
 	s2.forward(10)
 	
 def wizard_spell():
-    s3.create_sprite
-    s3.forward(30)
+	global x1, y1
+	global x3, y3
+	s3.showturtle()
+	s3.forward(100)
+	s3.goto
+	
+
+
+	
+
+	
+
+
+
+	
 	
 # TODO - pick keys for each control
 window.onkeypress(move_up, "w")
@@ -96,6 +151,11 @@ while True:
 	 
     
  	# TODO - code for automatic actions
+	if get_distance(s3,s2) < 20:
+		witch_lives -=1
+
+		
+	
 
 
 
