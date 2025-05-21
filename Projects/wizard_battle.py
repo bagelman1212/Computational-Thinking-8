@@ -39,7 +39,7 @@ set_background("castle")
 s1 = create_sprite("wizard2",x1,y1)
 s2 = create_sprite("witch2",x2,y2)
 s3 = create_sprite("ball-lightning3",x3,y3)
-s4 = create_sprite("ball-lightning3",x4,y4)
+s4 = create_sprite("ball-lightning4",x4,y4)
 # TODO - set the starting value for your variable
 wizard_charge = 3
 witch_charge = 3
@@ -62,6 +62,7 @@ def move_up():
 	s1.setheading(90)
 	s1.forward(10)
 	s3.setheading(90)
+	s3.forward(10)
 	s3.hideturtle()
 	y1 +=10
 	y3 +=10
@@ -69,79 +70,131 @@ def move_up():
 	
 
 def move_up2():
+	global y2, y4
 	s2.setheading(90)
 	s2.forward(10)
+	s4.setheading(90)
+	s4.forward(10)
+	s4.hideturtle()
+	y2 +=10
+	y4 +=10
    	 
 def move_down():
 	global y1,  y3
 	s1.setheading(270)
 	s1.forward(10)
 	s3.setheading(270)
+	s3.forward(10)
 	s3.hideturtle()
 	y1 -=10
 	y3 -=10
 	
 
 def move_down2():
+	global y2, y4
 	s2.setheading(270)
 	s2.forward(10)
+	s4.setheading(270)
+	s4.forward(10)
+	s4.hideturtle()
+	y2 -=10
+	y4 -=10
     
 def move_left():
 	global x1,  x3
 	s1.setheading(180)
 	s1.forward(10)
 	s3.setheading(180)
+	s3.forward(10)
 	s3.hideturtle()
 	x1 -=10
 	x3 -=10
 	
 	
 def move_left2():
+	global x2, x4
 	s2.setheading(180)
 	s2.forward(10)
+	s4.setheading(180)
+	s4.forward(10)
+	s4.hideturtle()
+	x2 -=10
+	x4 -=10
     
 def move_right():    
 	global x1,  x3
 	s1.setheading(0)
 	s1.forward(10)
 	s3.setheading(0)
+	s3.forward(10)
 	s3.hideturtle()
 	x1 +=10
 	x3 +=10
 	
 	
 def move_right2():    
+	global x2, x4
 	s2.setheading(0)
 	s2.forward(10)
+	s4.setheading(0)
+	s4.forward(10)
+	s4.hideturtle()
+	x2 +=10
+	x4 +=10
 	
+#added a reload system that works, however firing system where it fires then comes back to the wizard after going about 100 pixels is still not working. will add more things to witch next class.
+
 def wizard_spell():
 	global x1, y1
 	global x3, y3
 	global wizard_charge
+	global witch_lives
+	global s2, s3
 	if wizard_charge > 0:
 		s3.showturtle()
-		s3.forward(100)
+		window.update()
+		for i in range (20):
+			s3.forward(10)
+			if get_distance(s3,s2) < 30:
+				witch_lives -=1
+				break
+		window.update()
 		s3.goto(x3,y3)
 		wizard_charge -= 1
-
+#reloading system
 def wizard_recharge():
 	global wizard_charge
 	if wizard_charge < 3:
 		wizard_charge += 1
 		
 
-	
+def witch_spell():
+	global x2, y2
+	global x4, y4
+	global witch_charge
+	global wizard_lives
+	global s4, s1
+	if witch_charge > 0:
+		s4.showturtle()
+		for i in range (20):
+			s4.forward(10)
+			if get_distance(s4,s1) < 30:
+				wizard_lives -=1
+				break
+		window.update()
+		s4.goto(x4,y4)
+		witch_charge -= 1
 
-
-	
-
-	
-
-
+#reloading system
+def witch_recharge():
+	global witch_charge
+	if witch_charge < 3:
+		witch_charge += 1
 
 	
 	
 # TODO - pick keys for each control
+#all controls here, first set for wizard and second set for witch
 window.onkeypress(move_up, "w")
 window.onkeypress(move_down, "s")
 window.onkeypress(move_left, "a")
@@ -153,6 +206,8 @@ window.onkeypress(move_up2, "Up")
 window.onkeypress(move_down2, "Down")
 window.onkeypress(move_left2, "Left")
 window.onkeypress(move_right2, "Right")
+window.onkeypress(witch_spell, "o")
+window.onkeypress(witch_recharge, "p")
 
 # Section 4: Game Loop
 window.listen()
@@ -163,11 +218,9 @@ while True:
 	 
     
  	# TODO - code for automatic actions
-	if get_distance(s3,s2) < 20:
-		witch_lives -=1
+	
 
-	if get_distance(s4,s1) < 20:
-		wizard_lives -=1
+	
 
 	
 
@@ -178,7 +231,13 @@ while True:
 	window.update()
 
 	# if :
+	if wizard_lives == 0:
+		print("Witch wins!")
+		break
+
+	if witch_lives == 0:
+		print("Wizard wins!")
+		break
 	# 	break
 	
-
 print("Game Over")
