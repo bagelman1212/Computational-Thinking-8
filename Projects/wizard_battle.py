@@ -39,6 +39,7 @@ set_background("castle")
 s1 = create_sprite("wizard2",x1,y1)
 s2 = create_sprite("witch2",x2,y2)
 s3 = create_sprite("ball-lightning3",x3,y3)
+s4 = create_sprite("ball-lightning3",x4,y4)
 # TODO - set the starting value for your variable
 wizard_charge = 3
 witch_charge = 3
@@ -116,9 +117,19 @@ def move_right2():
 def wizard_spell():
 	global x1, y1
 	global x3, y3
-	s3.showturtle()
-	s3.forward(100)
-	s3.goto
+	global wizard_charge
+	if wizard_charge > 0:
+		s3.showturtle()
+		s3.forward(100)
+		s3.goto(x3,y3)
+		wizard_charge -= 1
+
+def wizard_recharge():
+	global wizard_charge
+	if wizard_charge < 3:
+		wizard_charge += 1
+		
+
 	
 
 
@@ -136,6 +147,7 @@ window.onkeypress(move_down, "s")
 window.onkeypress(move_left, "a")
 window.onkeypress(move_right, "d")
 window.onkeypress(wizard_spell, "e")
+window.onkeypress(wizard_recharge, "r")
 
 window.onkeypress(move_up2, "Up")
 window.onkeypress(move_down2, "Down")
@@ -154,13 +166,14 @@ while True:
 	if get_distance(s3,s2) < 20:
 		witch_lives -=1
 
-		
+	if get_distance(s4,s1) < 20:
+		wizard_lives -=1
+
 	
 
 
 
-
-
+	
 
 	window.update()
 
